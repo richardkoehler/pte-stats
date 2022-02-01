@@ -6,7 +6,7 @@
 
 # PTE Stats - Python tools for electrophysiology
 
-PTE Stats is an open-source software package for statistics with electrophysiological data
+PTE Stats is an open-source software package for statistics with time series.
 
 It builds upon [PTE](https://github.com/richardkoehler/pte) and provides statistical tools for time-series, such as intracranial EEG (iEEG) signals such as local field potentials (LFP) electrocorticography (ECoG).
 

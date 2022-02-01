@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pte-stats"
 version = "0.1.0"
-description = ""
+description = "An open-source software package for statistics with time series."
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE.txt"}
@@ -26,21 +26,11 @@ classifiers = [
 
 dependencies = [
   "joblib",
-  "matplotlib",
-  "mne",
-  "mne-bids",
   "numba",
   "numpy",
   "pip",
   "scikit-image",
-  "scipy",
   "statsmodels"
-      joblib
-    numba
-    numpy
-    pip
-    skimage
-    statsmodels
 ]
 
 [project.optional-dependencies]
