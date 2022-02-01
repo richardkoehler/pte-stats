@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pte-stats"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE.txt"}
+keywords = ["statistics", "timeseries", "eeg", "ieeg", "ecog", "lfp", "dbs"]
+authors = [
+  {name = "Richard Koehler"}
+]
+maintainers = [
+  {name = "Richard Koehler"}
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+dependencies = [
+  "joblib",
+  "matplotlib",
+  "mne",
+  "mne-bids",
+  "numba",
+  "numpy",
+  "pip",
+  "scikit-image",
+  "scipy",
+  "statsmodels"
+      joblib
+    numba
+    numpy
+    pip
+    skimage
+    statsmodels
+]
+
+[project.optional-dependencies]
+test = [
+  "pylint",
+  "pytest",
+]
+style = [
+  "black",
+  "isort"
+]
+
+[project.urls]
+repository = "https://github.com/richardkoehler/pte_stats"
+changelog = "https://github.com/richardkoehler/pte_stats/blob/main/doc/CHANGELOG.md"
+bugtracker = "https://github.com/richardkoehler/pte_stats/issues"
+
+[tool.black]
+line-length = 79
+target-version = ['py310']
+exclude = '''
+/(
+    \.git
+  | \.tox
+  | .gitignore
+  | environment.yml
+  | environment_dev.yml
+  | LICENSE.txt
+  | pylintrc
+  | README.md
+  | setup.cfg
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 79
+py_version = 310
+src_paths = ["pte_stats"]
