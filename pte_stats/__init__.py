@@ -2,6 +2,8 @@
 
 __version__ = "0.1.0"
 
+__version__ = "0.1.1.dev1"
+
 from .cluster import (
     cluster_2d,
     clusters_from_pvals,

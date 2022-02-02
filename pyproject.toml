@@ -26,15 +26,15 @@ requires-python = ">=3.9"
 
 dependencies = [
   "joblib",
-  "matplotlib",
-  "mne",
-  "mne-bids",
   "numba",
   "numpy",
   "pip",
   "scikit-image",
   "statsmodels",
 ]
+
+[tool.flit.module]
+name = "pte_stats"
 
 [project.optional-dependencies]
 style = [

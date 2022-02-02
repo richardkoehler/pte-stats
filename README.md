@@ -6,33 +6,34 @@
 
 # PTE Stats - Python tools for electrophysiology
 
-PTE Stats is an open-source software package for statistics with electrophysiological data
+PTE Stats is an open-source software package for statistics with time series.
 
-It builds upon [PTE](https://github.com/richardkoehler/pte) and provides statistical tools for time-series, such as intracranial EEG (iEEG) signals such as local field potentials (LFP) electrocorticography (ECoG).
+It builds upon [PTE](https://github.com/richardkoehler/pte) and provides statistical tools for time-series.
+PTE Stats is particularly useful with intracranial EEG (iEEG) data such as local field potentials (LFP) and electrocorticography (ECoG).
 
-## Installing pte_stats
+## Installing pte-stats
 
-First, get the current development version of pte_stats using [git](https://git-scm.com/). Type the following command into a terminal:
+First, get the current development version of pte-stats using [git](https://git-scm.com/). Type the following command into a terminal:
 
 ```bash
-git clone https://github.com/richardkoehler/pte_stats
+git clone https://github.com/richardkoehler/pte-stats
 ```
 
-Use the package manager [conda](https://docs.conda.io/projects/conda/en/latest/index.html) to set up a new working environment. To do so navigate to the pte_stats root directory in your terminal and type:
+Use the package manager [conda](https://docs.conda.io/projects/conda/en/latest/index.html) to set up a new working environment. To do so navigate to the pte-stats root directory in your terminal and type:
 
 ```bash
 conda env create -f env.yml
 ```
 
-This will set up a new conda environment called ``pte_stats``.
+This will set up a new conda environment called ``pte-stats``.
 
 To activate the environment then type:
 
 ```bash
-conda activate pte_stats
+conda activate pte-stats
 ```
 
-Finally, to install pte_stats in an editable development version inside your conda enviroment type the following inside the pte_stats root directory:
+Finally, to install pte-stats in an editable development version inside your conda enviroment type the following inside the pte-stats root directory:
 
 ```bash
 conda develop .
@@ -57,7 +58,7 @@ To contribute yourselves, consider installing the full conda development environ
 
 ```bash
 conda env create -f env_dev.yml
-conda activate pte_stats-dev
+conda activate pte-stats-dev
 ```
 
 Continuous Integration (CI) including automated testing are set up.
@@ -69,9 +70,9 @@ PTE Stats is licensed under the [MIT license](license-url).
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [homepage-shield]: https://img.shields.io/static/v1?label=Homepage&message=ICN&logoColor=black&labelColor=grey&logoWidth=20&color=9cf&style=for-the-badge
 [homepage-url]: https://www.icneuromodulation.org/
-[contributors-shield]: https://img.shields.io/github/contributors/richardkoehler/pte_stats.svg?style=for-the-badge
-[contributors-url]: https://github.com/richardkoehler/pte_stats/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/richardkoehler/pte-stats.svg?style=for-the-badge
+[contributors-url]: https://github.com/richardkoehler/pte-stats/graphs/contributors
 [license-shield]: https://img.shields.io/static/v1?label=License&message=MIT&logoColor=black&labelColor=grey&logoWidth=20&color=yellow&style=for-the-badge
-[license-url]: https://github.com/richardkoehler/pte_stats/blob/main/LICENSE/
+[license-url]: https://github.com/richardkoehler/pte-stats/blob/main/LICENSE/
 [codestyle-shield]: https://img.shields.io/static/v1?label=CodeStyle&message=black&logoColor=black&labelColor=grey&logoWidth=20&color=black&style=for-the-badge
 [codestyle-url]: https://github.com/psf/black
