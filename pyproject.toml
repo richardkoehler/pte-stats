@@ -1,28 +1,28 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.5,<4"]
 
 [project]
-name = "pte-stats"
-version = "0.1.0"
-description = ""
-readme = "README.md"
-requires-python = ">=3.9"
-license = {file = "LICENSE.txt"}
-keywords = ["statistics", "timeseries", "eeg", "ieeg", "ecog", "lfp", "dbs"]
 authors = [
-  {name = "Richard Koehler"}
-]
-maintainers = [
-  {name = "Richard Koehler"}
+  {name = "Richard Koehler"},
 ]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
-  "Topic :: Software Development :: Libraries :: Python Modules"
+  "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+description = "An open-source software package for statistics with time series."
+dynamic = ["version"]
+keywords = ["statistics", "timeseries", "eeg", "ieeg"]
+license = {file = "LICENSE.txt"}
+maintainers = [
+  {name = "Richard Koehler"},
+]
+name = "pte-stats"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.9"
 
 dependencies = [
   "joblib",
@@ -33,34 +33,25 @@ dependencies = [
   "numpy",
   "pip",
   "scikit-image",
-  "scipy",
-  "statsmodels"
-      joblib
-    numba
-    numpy
-    pip
-    skimage
-    statsmodels
+  "statsmodels",
 ]
 
 [project.optional-dependencies]
+style = [
+  "black",
+  "isort",
+]
 test = [
   "pylint",
   "pytest",
 ]
-style = [
-  "black",
-  "isort"
-]
 
 [project.urls]
-repository = "https://github.com/richardkoehler/pte_stats"
-changelog = "https://github.com/richardkoehler/pte_stats/blob/main/doc/CHANGELOG.md"
-bugtracker = "https://github.com/richardkoehler/pte_stats/issues"
+bugtracker = "https://github.com/richardkoehler/pte-stats/issues"
+changelog = "https://github.com/richardkoehler/pte-stats/blob/main/doc/CHANGELOG.md"
+repository = "https://github.com/richardkoehler/pte-stats"
 
 [tool.black]
-line-length = 79
-target-version = ['py310']
 exclude = '''
 /(
     \.git
@@ -74,9 +65,11 @@ exclude = '''
   | setup.cfg
 )/
 '''
+line-length = 79
+target-version = ['py310']
 
 [tool.isort]
-profile = "black"
 line_length = 79
+profile = "black"
 py_version = 310
 src_paths = ["pte_stats"]
