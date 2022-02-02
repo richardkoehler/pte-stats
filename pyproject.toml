@@ -47,9 +47,9 @@ style = [
 ]
 
 [project.urls]
-repository = "https://github.com/richardkoehler/pte_stats"
-changelog = "https://github.com/richardkoehler/pte_stats/blob/main/doc/CHANGELOG.md"
-bugtracker = "https://github.com/richardkoehler/pte_stats/issues"
+repository = "https://github.com/richardkoehler/pte-stats"
+changelog = "https://github.com/richardkoehler/pte-stats/blob/main/doc/CHANGELOG.md"
+bugtracker = "https://github.com/richardkoehler/pte-stats/issues"
 
 [tool.black]
 line-length = 79
