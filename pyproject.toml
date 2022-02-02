@@ -3,7 +3,7 @@ requires = ["flit_core >=3.5,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "pte_stats"
+name = "pte-stats"
 description = "An open-source software package for statistics with time series."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -32,6 +32,9 @@ dependencies = [
   "scikit-image",
   "statsmodels"
 ]
+
+[tool.flit.module]
+name = "pte_stats"
 
 [project.optional-dependencies]
 test = [
