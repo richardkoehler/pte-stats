@@ -1,6 +1,6 @@
 """Package for statistics."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 from .cluster import (
     cluster_2d,
