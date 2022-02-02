@@ -33,9 +33,6 @@ dependencies = [
   "statsmodels",
 ]
 
-[tool.flit.module]
-name = "pte_stats"
-
 [project.optional-dependencies]
 style = [
   "black",
