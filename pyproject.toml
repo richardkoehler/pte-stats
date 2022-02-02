@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "pte-stats"
 description = "An open-source software package for statistics with time series."
-readme = { file = "README.md", content-type = "test/markdown"}
+readme = { file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.9"
 license = {file = "LICENSE.txt"}
 keywords = ["statistics", "timeseries", "eeg", "ieeg"]
