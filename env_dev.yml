@@ -16,3 +16,6 @@ dependencies:
   - isort
   - pylint
   - pytest
+  - pip:
+    - flit
+    

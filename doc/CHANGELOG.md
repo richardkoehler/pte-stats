@@ -16,4 +16,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/richardkoehler/pte_stats
+[Unreleased]: https://github.com/richardkoehler/pte-stats

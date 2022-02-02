@@ -1,15 +1,14 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["flit_core >=3.5,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "pte-stats"
-version = "0.1.0"
-description = ""
-readme = "README.md"
+description = "An open-source software package for statistics with time series."
+readme = { file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.9"
 license = {file = "LICENSE.txt"}
-keywords = ["statistics", "timeseries", "eeg", "ieeg", "ecog", "lfp", "dbs"]
+keywords = ["statistics", "timeseries", "eeg", "ieeg"]
 authors = [
   {name = "Richard Koehler"}
 ]
@@ -23,25 +22,19 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Topic :: Software Development :: Libraries :: Python Modules"
 ]
+dynamic = ["version"]
 
 dependencies = [
   "joblib",
-  "matplotlib",
-  "mne",
-  "mne-bids",
   "numba",
   "numpy",
   "pip",
   "scikit-image",
-  "scipy",
   "statsmodels"
-      joblib
-    numba
-    numpy
-    pip
-    skimage
-    statsmodels
 ]
+
+[tool.flit.module]
+name = "pte_stats"
 
 [project.optional-dependencies]
 test = [
@@ -54,9 +47,9 @@ style = [
 ]
 
 [project.urls]
-repository = "https://github.com/richardkoehler/pte_stats"
-changelog = "https://github.com/richardkoehler/pte_stats/blob/main/doc/CHANGELOG.md"
-bugtracker = "https://github.com/richardkoehler/pte_stats/issues"
+repository = "https://github.com/richardkoehler/pte-stats"
+changelog = "https://github.com/richardkoehler/pte-stats/blob/main/doc/CHANGELOG.md"
+bugtracker = "https://github.com/richardkoehler/pte-stats/issues"
 
 [tool.black]
 line-length = 79
