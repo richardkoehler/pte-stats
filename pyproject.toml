@@ -46,6 +46,9 @@ test = [
   "pytest",
 ]
 
+[tool.flit.module]
+name = "pte_stats"
+
 [project.urls]
 bugtracker = "https://github.com/richardkoehler/pte-stats/issues"
 changelog = "https://github.com/richardkoehler/pte-stats/blob/main/doc/CHANGELOG.md"
