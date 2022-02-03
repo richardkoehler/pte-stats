@@ -34,6 +34,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+build = [
+  "flit",
+]
 style = [
   "black",
   "isort",
@@ -55,15 +58,24 @@ repository = "https://github.com/richardkoehler/pte-stats"
 exclude = '''
 /(
     \.git
-  | \.tox
   | .gitignore
-  | environment.yml
-  | environment_dev.yml
+  | .gitattributes
+  | \.github
+  | \.tox
+  | env.yml
+  | env_dev.yml
   | LICENSE.txt
   | pylintrc
   | README.md
   | setup.cfg
+  | __pycache__
 )/
+'''
+include = '''
+(
+    ^/tests
+  | ^/pte_stats/
+)
 '''
 line-length = 79
 target-version = ['py310']
