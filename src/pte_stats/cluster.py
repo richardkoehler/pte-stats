@@ -99,7 +99,7 @@ def cluster_2d(
     for cluster_i in range(num_clusters):
         # index_cluster = np.where(labels == cluster_i + 1)[0]
         index_cluster = np.asarray(labels == cluster_i + 1)
-        index_cluster = index_cluster.nonzero()
+        index_cluster = np.nonzero(index_cluster)[0]
         p_cluster_sum = np.sum(np.asarray(1 - p_values)[index_cluster])
         print(f"Cluster value: {p_cluster_sum}")
         p_val = (n_perm - np.sum(p_cluster_sum >= null_distr) + 1) / n_perm
@@ -160,6 +160,7 @@ def get_clusters(data: Iterable, min_cluster_size: int = 1):
         Number of detected cluster. Corresponds to the highest value in
         cluster_labels
     """
+    data = np.asarray(data)
     min_cluster_size = max(min_cluster_size, 1)
     cluster_labels = np.zeros_like(data, dtype=int)
     cluster_count = 0
