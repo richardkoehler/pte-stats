@@ -1,4 +1,4 @@
-name: pte-stats-dev
+name: pte-stats-build
 channels:
   - defaults
 dependencies:
@@ -18,4 +18,6 @@ dependencies:
     - pylint
     - pytest
     - pytest-cov
+    # build dependencies
+    - flit
     
