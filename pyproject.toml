@@ -34,16 +34,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-build = [
+deploy = [
   "flit",
 ]
-style = [
+dev = [
   "black",
   "isort",
-]
-test = [
+  "mypy",
   "pylint",
   "pytest",
+  "pytest-cov",
 ]
 
 [tool.flit.module]
@@ -57,24 +57,13 @@ repository = "https://github.com/richardkoehler/pte-stats"
 [tool.black]
 exclude = '''
 /(
-    \.git
-  | .gitignore
-  | .gitattributes
-  | \.github
-  | \.tox
-  | env.yml
-  | env_dev.yml
-  | LICENSE.txt
-  | pylintrc
-  | README.md
-  | setup.cfg
-  | __pycache__
+  __pycache__
 )/
 '''
 include = '''
 (
-    ^/tests
-  | ^/pte_stats/
+    /tests
+  | src/pte_stats/
 )
 '''
 line-length = 79
@@ -85,3 +74,14 @@ line_length = 79
 profile = "black"
 py_version = 310
 src_paths = ["pte_stats"]
+
+[tool.mypy]
+python_version = "3.10"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "numba",
+  "skimage",
+  "statsmodels.stats.multitest",
+]
