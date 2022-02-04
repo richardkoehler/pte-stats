@@ -77,11 +77,11 @@ PTE Stats is licensed under the [MIT license](license-url).
 [pypi-url]: https://pypi.org/project/pte-stats/
 [tests-shield]: https://github.com/richardkoehler/pte-stats/actions/workflows/tests.yml/badge.svg
 [tests-url]: https://github.com/richardkoehler/pte-stats/actions/workflows/tests.yml
-[homepage-shield]: https://img.shields.io/static/v1?label=Homepage&message=ICN&logoColor=black&labelColor=grey&logoWidth=20&color=9cf
+[homepage-shield]: https://img.shields.io/static/v1?label=Homepage&message=ICN&logoColor=black&labelColor=grey&color=9cf
 [homepage-url]: https://www.icneuromodulation.org/
 [contributors-shield]: https://img.shields.io/github/contributors/richardkoehler/pte-stats.svg
 [contributors-url]: https://github.com/richardkoehler/pte-stats/graphs/contributors
-[license-shield]: https://img.shields.io/static/v1?label=License&message=MIT&logoColor=black&labelColor=grey&logoWidth=20&color=yellow
+[license-shield]: https://img.shields.io/static/v1?label=License&message=MIT&logoColor=black&labelColor=grey&color=yellow
 [license-url]: https://github.com/richardkoehler/pte-stats/blob/main/LICENSE/
-[codestyle-shield]: https://img.shields.io/static/v1?label=CodeStyle&message=black&logoColor=black&labelColor=grey&logoWidth=20&color=black
+[codestyle-shield]: https://img.shields.io/static/v1?label=CodeStyle&message=black&logoColor=black&labelColor=grey&color=black
 [codestyle-url]: https://github.com/psf/black
