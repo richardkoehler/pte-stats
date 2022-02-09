@@ -13,7 +13,7 @@ def permutation_2d(x, y, n_perm=1000, two_tailed=True):
     x : array_like
         First distribution
     y : int or float
-        Baseline against which to check for statistical significane
+        Baseline against which to check for statistical significance
     n_perm : int
         Number of permutations
     two_tailed : bool, default: True
@@ -31,7 +31,7 @@ def permutation_2d(x, y, n_perm=1000, two_tailed=True):
         P-value of permutation test
     """
 
-    def permutation_pval(x, y, n_perm, two_tailed):
+    def permutation_pvalue(x, y, n_perm, two_tailed):
         zeroed = x - y
         p = np.empty(n_perm)
         z = np.mean(zeroed)
@@ -49,12 +49,12 @@ def permutation_2d(x, y, n_perm=1000, two_tailed=True):
         # Return p-value
         return z, (np.sum(p >= z) + 1) / (n_perm + 1)
 
-    p_vals = np.empty((x.shape[1], x.shape[2]))
+    p_values = np.empty((x.shape[1], x.shape[2]))
     for i in np.arange(x.shape[1]):
         for j in np.arange(x.shape[2]):
-            _, p = permutation_pval(x[:, i, j], y, n_perm, two_tailed)
-            p_vals[i, j] = p
-    return p_vals
+            _, p = permutation_pvalue(x[:, i, j], y, n_perm, two_tailed)
+            p_values[i, j] = p
+    return p_values
 
 
 @njit
@@ -66,7 +66,7 @@ def permutation_onesample(x, y, n_perm=10000, two_tailed=True):
     x : array_like
         First distribution
     y : int or float
-        Baseline against which to check for statistical significane
+        Baseline against which to check for statistical significance
     n_perm : int
         Number of permutations
     two_tailed : bool, default: True
@@ -127,7 +127,7 @@ def permutation_twosample(x, y, n_perm=10000, two_tailed=True):
     float
         P-value of permutation test
     """
-    if two_tailed is True:
+    if two_tailed:
         zeroed = np.abs(np.mean(x) - np.mean(y))
         data = np.concatenate((x, y), axis=0)
         half = int(len(data) / 2)
