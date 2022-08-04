@@ -18,10 +18,12 @@ from .permutation import (
     permutation_2d,
     permutation_2d_onesample,
     permutation_2d_twosample,
+    spearmans_rho_permutation,
 )
 from .timeseries import (
     timeseries_pvals,
     correct_pvals,
     baseline_correct,
     handle_baseline,
+    handle_baseline_bytimes,
 )

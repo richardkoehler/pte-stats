@@ -1,5 +1,4 @@
-"""Module for functions regarding multiple comparison."""
-from matplotlib import pyplot as plt
+"""Module for statistical analysis of time series."""
 import numpy as np
 from statsmodels.stats.multitest import fdrcorrection
 
@@ -60,9 +59,9 @@ def handle_baseline(
     sfreq: int | float | None = None,
 ) -> tuple[int | None, int | None]:
     """Return baseline start and end indices."""
-    if not baseline:
+    if baseline is None:
         return None, None
-    if any(baseline) and not sfreq:
+    if any(baseline) and sfreq is None:
         raise ValueError(
             "If `baseline` is any value other than `None`, or `(None, None)`,"
             f" `sfreq` must be provided. Got: {baseline=}"
@@ -80,24 +79,54 @@ def handle_baseline(
     return base_start, base_end
 
 
+def handle_baseline_bytimes(
+    baseline: None | tuple[int | float | None, int | float | None] = None,
+    times: np.ndarray | None = None,
+) -> tuple[int | None, int | None]:
+    """Return baseline start and end indices."""
+    if baseline is None:
+        return None, None
+    if any(baseline) and times is None:
+        raise ValueError(
+            "If `baseline` is any value other than `None`, or `(None, None)`,"
+            f" `times` must be provided. Got: {baseline=}"
+        )
+    if baseline[0] is None:
+        base_start = 0
+    else:
+        base_start = np.where(baseline[0] <= times)[0][0]
+    if baseline[1] is None:
+        base_end = None
+    else:
+        base_end = np.where(times <= baseline[1])[0][-1]
+    return base_start, base_end
+
+
 def baseline_correct(
     data: np.ndarray,
     baseline_mode: str = "percent",
     base_start: int | None = None,
     base_end: int | None = None,
+    baseline_trialwise: bool = False,
 ) -> np.ndarray:
     """Baseline correct data."""
+    if baseline_trialwise:
+        axis = -1
+    else:
+        axis = (-2, -1)
+
     baseline = data[::, base_start:base_end]
+
     if baseline_mode == "percent":
-        mean = np.mean(baseline, axis=1, keepdims=True)
+        mean = np.mean(baseline, axis=axis, keepdims=True)
         data = (data - mean) / (mean) * 100
         return data
     if baseline_mode == "zscore":
-        mean = np.mean(baseline, axis=1, keepdims=True)
+        mean = np.mean(baseline, axis=axis, keepdims=True)
         data = (data - mean) / (np.std(baseline, axis=1, keepdims=True))
         return data
     if baseline_mode == "std":
-        data /= np.std(baseline, axis=1, keepdims=True)
+        data /= np.std(baseline, axis=axis, keepdims=True)
         return data
     raise ValueError(
         "`baseline_mode` must be one of either `percent`, `std` or `zscore`."

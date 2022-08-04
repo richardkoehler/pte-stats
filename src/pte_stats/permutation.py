@@ -1,7 +1,57 @@
 """Module for permutation testing."""
+import random
 
 import numpy as np
 from numba import njit
+
+import scipy.stats
+
+
+def spearmans_rho_permutation(
+    x: np.ndarray, y: np.ndarray, n_perm: int = 5000
+) -> tuple[float, float]:
+    """Calculate permutation test for multiple repetitions of Spearmans Rho
+
+    https://towardsdatascience.com/how-to-assess-statistical-significance-in-your-data-with-permutation-tests-8bb925b2113d
+
+    Parameters
+    ----------
+    x (np array) : first distibution
+    y (np array) : second distribution
+    n_permp (int): number of permutations
+
+    Returns
+    -------
+    gT (float) : estimated ground truth, here spearman's rho
+    p_val (float) : p value of permutation test
+    """
+
+    # compute ground truth difference
+    gT = scipy.stats.spearmanr(x, y)[0]
+    #
+    pV = np.array((x, y))
+    # Initialize permutation:
+    pD = []
+    # Permutation loop:
+    args_order = np.arange(0, pV.shape[1], 1)
+    args_order_2 = np.arange(0, pV.shape[1], 1)
+    for _ in range(n_perm):
+        # Shuffle the data:
+        random.shuffle(args_order)
+        random.shuffle(args_order_2)
+        # Compute permuted absolute difference of your two sampled
+        # distributions and store it in pD:
+        pD.append(
+            scipy.stats.spearmanr(pV[0, args_order], pV[1, args_order_2])[0]
+        )
+
+    # calculate p value
+    if gT < 0:
+        p_val = (len(np.where(pD <= gT)[0]) + 1) / (n_perm + 1)
+    else:
+        p_val = (len(np.where(pD >= gT)[0]) + 1) / (n_perm + 1)
+
+    return gT, p_val
 
 
 def permutation_2d(
