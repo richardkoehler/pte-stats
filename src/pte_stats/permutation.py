@@ -3,12 +3,12 @@ import random
 
 import numpy as np
 from numba import njit
-
+import pandas as pd
 import scipy.stats
 
 
 def spearmans_rho_permutation(
-    x: np.ndarray, y: np.ndarray, n_perm: int = 5000
+    x: np.ndarray |pd.Series, y: np.ndarray |pd.Series, n_perm: int = 5000
 ) -> tuple[float, float]:
     """Calculate permutation test for multiple repetitions of Spearmans Rho
 

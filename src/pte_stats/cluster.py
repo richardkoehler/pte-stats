@@ -159,16 +159,19 @@ def clusters_from_pvals(
     min_cluster_size: int = 1,
 ) -> tuple[np.ndarray, int]:
     """Return significant clusters from array of p-values."""
-    if np.where(p_vals <= alpha)[0].size > 1:
-        p_vals_signif = pte_stats.correct_pvals(
+    p_vals_signif = np.where(p_vals <= alpha)[0]
+    if p_vals_signif.size == p_vals.size:
+        return (np.ones_like(p_vals, dtype=np.int32), 1)
+    if p_vals_signif.size > 1:
+        p_vals_corr = pte_stats.correct_pvals(
             p_vals=p_vals,
             alpha=alpha,
             correction_method=correction_method,
             n_perm=n_perm,
         )
-        if p_vals_signif.size > 1:
+        if p_vals_corr.size > 1:
             clusters_raw = np.array(
-                [1 if i in p_vals_signif else 0 for i, _ in enumerate(p_vals)]
+                [1 if i in p_vals_corr else 0 for i, _ in enumerate(p_vals)]
             )
             clusters, cluster_count = get_clusters_1d(
                 data=clusters_raw, min_cluster_size=min_cluster_size
