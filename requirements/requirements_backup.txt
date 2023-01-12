@@ -30,7 +30,7 @@ pandas==1.4.0
     # via statsmodels
 patsy==0.5.2
     # via statsmodels
-pillow==9.0.1
+pillow==9.3.0
     # via
     #   imageio
     #   scikit-image
