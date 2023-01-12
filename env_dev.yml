@@ -2,20 +2,8 @@ name: pte-stats-dev
 channels:
   - defaults
 dependencies:
-  - python>=3.9
   - pip
+  - python=3.10
   - pip:
-    # basic dependencies
-    - joblib
-    - numba
-    - numpy
-    - scikit-image
-    - statsmodels
-    # development dependencies
-    - black
-    - isort
-    - mypy
-    - pylint
-    - pytest
-    - pytest-cov
+    - -e .[dev]
     
