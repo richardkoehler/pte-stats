@@ -4,7 +4,7 @@ requires = ["flit_core >=3.5,<4"]
 
 [project]
 authors = [
-  {name = "Richard Köhler"},
+  {name = "Richard M. Köhler"},
 ]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
@@ -15,9 +15,9 @@ classifiers = [
 description = "An open-source software package for statistics with time series."
 dynamic = ["version"]
 keywords = ["statistics", "timeseries", "eeg", "ieeg"]
-license = {file = "LICENSE.txt"}
+license = {file = "LICENSE"}
 maintainers = [
-  {name = "Richard Köhler"},
+  {name = "Richard M. Köhler"},
 ]
 name = "pte-stats"
 readme = {file = "README.md", content-type = "text/markdown"}
@@ -31,9 +31,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-deploy = [
-  "flit",
-]
 dev = [
   "black",
   "isort",
