@@ -2,13 +2,13 @@
 import random
 
 import numpy as np
-from numba import njit
+from numba import njit, prange
 import pandas as pd
 import scipy.stats
 
 
 def spearmans_rho_permutation(
-    x: np.ndarray |pd.Series, y: np.ndarray |pd.Series, n_perm: int = 5000
+    x: np.ndarray | pd.Series, y: np.ndarray | pd.Series, n_perm: int = 5000
 ) -> tuple[float, float]:
     """Calculate permutation test for multiple repetitions of Spearmans Rho
 
@@ -131,7 +131,7 @@ def permutation_1d(
     )
 
 
-@njit
+@njit(cache=False)
 def permutation_1d_twosample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
@@ -146,7 +146,7 @@ def permutation_1d_twosample(
     return p_values
 
 
-@njit
+@njit(cache=False)
 def permutation_1d_onesample(
     data_a: np.ndarray, data_b: int | float, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
@@ -159,7 +159,7 @@ def permutation_1d_onesample(
     return p_values
 
 
-@njit
+@njit(cache=False)
 def permutation_2d_twosample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
@@ -175,7 +175,7 @@ def permutation_2d_twosample(
     return p_values
 
 
-@njit
+@njit(cache=False)
 def permutation_2d_onesample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
@@ -191,7 +191,7 @@ def permutation_2d_onesample(
     return p_values
 
 
-@njit
+@njit(cache=False)
 def permutation_onesample(
     data_a: np.ndarray,
     data_b: int | float,
@@ -230,7 +230,7 @@ def permutation_onesample(
     if two_tailed:
         z = np.abs(z)
     # Run the simulation n_perm times
-    for i in np.arange(n_perm):
+    for i in prange(n_perm):
         sign = np.random.choice(
             a=np.array([-1.0, 1.0]), size=len(data_a), replace=True
         )
@@ -252,10 +252,14 @@ def permutation_onesample(
     else:
         effect_size = np.round(abs_diff / std, 3)
 
-    return effect_size, (np.sum(p >= z) + 1) / (n_perm + 1)
+    tol = max(1e-14, np.abs(z) * 1e-14)
+    p_diffs = p - z
+
+    # return effect_size, (np.sum(p >= z) + 1) / (n_perm + 1)
+    return effect_size, (np.sum(p_diffs >= tol) + 1) / (n_perm + 1)
 
 
-@njit
+@njit(cache=False)
 def permutation_twosample(
     data_a: np.ndarray,
     data_b: np.ndarray,
@@ -291,7 +295,7 @@ def permutation_twosample(
         data = np.concatenate((data_a, data_b), axis=0)
         half = int(len(data) / 2)
         p = np.empty(n_perm)
-        for i in np.arange(0, n_perm):
+        for i in prange(0, n_perm):
             np.random.shuffle(data)
             # Compute permuted absolute difference of the two sampled
             # distributions
@@ -301,7 +305,7 @@ def permutation_twosample(
         data = np.concatenate((data_a, data_b), axis=0)
         half = int(len(data) / 2)
         p = np.empty(n_perm)
-        for i in np.arange(0, n_perm):
+        for i in prange(0, n_perm):
             np.random.shuffle(data)
             # Compute permuted absolute difference of the two sampled
             # distributions
@@ -318,5 +322,5 @@ def permutation_twosample(
         / (n_a + n_b - 2)
     )
     effect_size = np.abs(np.mean(data_a) - np.mean(data_b)) / pooled_std
-    effect_size = np.round(effect_size, 3)
+    # effect_size = np.round(effect_size, 3)
     return effect_size, (np.sum(p >= zeroed) + 1) / (n_perm + 1)
