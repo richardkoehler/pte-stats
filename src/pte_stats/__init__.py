@@ -8,6 +8,7 @@ from .cluster import (
     cluster_analysis_from_pvals,
     clusters_from_pvals,
     get_clusters_1d,
+    cluster_correct_pvals_2d
 )
 from .permutation import (
     permutation_onesample,

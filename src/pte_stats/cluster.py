@@ -17,21 +17,32 @@ def cluster_analysis_2d(
     """Calculate significant clusters and their corresponding p-values."""
     if data_b is None:
         data_b = 0
-    # if isinstance(data_b, (int, float)):
-    #     one_sample = True
-    # else:
-    #     one_sample = False
-
-    two_tailed = True
 
     # Get 2D clusters
     p_values = pte_stats.permutation_2d(
         data_a=data_a,
         data_b=data_b,
         n_perm=n_perm,
-        two_tailed=two_tailed,
+        two_tailed=True,
     )
 
+    cluster_pvals, clusters = cluster_correct_pvals_2d(
+        p_values=p_values,
+        alpha=alpha,
+        n_perm=n_perm,
+        only_max_cluster=only_max_cluster,
+        n_jobs=n_jobs,
+    )
+    return p_values, cluster_pvals, clusters
+
+def cluster_correct_pvals_2d(
+    p_values: np.ndarray,
+    alpha: float,
+    n_perm: int,
+    only_max_cluster: bool,
+    n_jobs: int,
+) -> tuple[list, list]:
+    """Calculate significant clusters from p-values."""
     labels, num_clusters = measure.label(
         p_values <= alpha, return_num=True, connectivity=2
     )  # type: ignore
@@ -41,16 +52,6 @@ def cluster_analysis_2d(
         n_perm=n_perm,
         n_jobs=n_jobs,
     )
-
-    # null_distr = _null_distribution_2d(
-    #     data_a=data_a,
-    #     data_b=data_b,
-    #     alpha=alpha,
-    #     n_perm=n_perm,
-    #     two_tailed=two_tailed,
-    #     one_sample=one_sample,
-    #     n_jobs=n_jobs,
-    # )
 
     p_values_inv = np.asarray(1 - p_values)
     p_sum_max = 0  # Is only used if only_max_cluster
@@ -71,9 +72,7 @@ def cluster_analysis_2d(
                 clusters.append(index_cluster)
                 cluster_pvals = [p_val]
                 p_sum_max = p_sum
-
-    return p_values, cluster_pvals, clusters
-
+    return cluster_pvals, clusters
 
 def _null_distribution_2d_from_pvals(
     p_values: np.ndarray,
@@ -246,7 +245,7 @@ def clusters_from_pvals(
     return ([], 0)
 
 
-@njit()
+@njit
 def get_clusters_1d(
     data: np.ndarray, min_cluster_size: int = 1
 ) -> tuple[np.ndarray, int]:
@@ -290,7 +289,7 @@ def get_clusters_1d(
     return cluster_labels, cluster_count
 
 
-@njit(cache=True)
+@njit
 def _null_distribution_from_pvals(
     p_values: np.ndarray,
     alpha: float = 0.05,
@@ -393,7 +392,7 @@ def _null_distribution_1d_onesample(
     return null_distr
 
 
-@njit(cache=True)
+@njit
 def _null_distribution_1d_twosample(
     data_a: np.ndarray,
     data_b: np.ndarray,
