@@ -59,7 +59,7 @@ def permutation_2d(
     data_b: np.ndarray | int | float,
     n_perm: int = 1000,
     two_tailed: bool = True,
-):
+) -> np.ndarray:
     """Perform permutation test with two-dimensional array.
 
     Parameters
@@ -159,7 +159,7 @@ def permutation_1d_onesample(
     return p_values
 
 
-@njit(cache=False)
+@njit()
 def permutation_2d_twosample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
@@ -175,7 +175,7 @@ def permutation_2d_twosample(
     return p_values
 
 
-@njit(cache=False)
+@njit()
 def permutation_2d_onesample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
