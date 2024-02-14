@@ -16,7 +16,7 @@ def spearmans_rho_permutation(
 
     Parameters
     ----------
-    x (np array) : first distibution
+    x (np array) : first distribution
     y (np array) : second distribution
     n_permp (int): number of permutations
 
@@ -37,8 +37,8 @@ def spearmans_rho_permutation(
     args_order_2 = np.arange(0, pV.shape[1], 1)
     for _ in range(n_perm):
         # Shuffle the data:
-        random.shuffle(args_order)
-        random.shuffle(args_order_2)
+        random.shuffle(args_order)  # type: ignore
+        random.shuffle(args_order_2)  # type: ignore
         # Compute permuted absolute difference of your two sampled
         # distributions and store it in pD:
         pD.append(
@@ -59,7 +59,7 @@ def permutation_2d(
     data_b: np.ndarray | int | float,
     n_perm: int = 1000,
     two_tailed: bool = True,
-):
+) -> np.ndarray:
     """Perform permutation test with two-dimensional array.
 
     Parameters
@@ -159,7 +159,7 @@ def permutation_1d_onesample(
     return p_values
 
 
-@njit(cache=False)
+@njit()
 def permutation_2d_twosample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
@@ -175,7 +175,7 @@ def permutation_2d_twosample(
     return p_values
 
 
-@njit(cache=False)
+@njit()
 def permutation_2d_onesample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:

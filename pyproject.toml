@@ -1,6 +1,7 @@
 [build-system]
-build-backend = "flit_core.buildapi"
-requires = ["flit_core >=3.5,<4"]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
 
 [project]
 authors = [
@@ -24,26 +25,31 @@ readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
 
 dependencies = [
+  "joblib",
   "numba",
   "numpy",
   "scikit-image",
   "statsmodels",
+  "pandas-stubs",
 ]
 
 [project.optional-dependencies]
 dev = [
   "black",
-  "isort",
   "mypy",
-  "pip-tools",
-  "pylint",
+  "pandas-stubs",
+  "pre-commit",
   "pytest",
   "pytest-cov",
+  "ruff",
   "tox",
 ]
 
 [tool.flit.module]
 name = "pte_stats"
+
+[tool.hatch.version]
+path = "src/pte_stats/__init__.py"
 
 [project.urls]
 bugtracker = "https://github.com/richardkoehler/pte-stats/issues"
@@ -67,7 +73,11 @@ line-length = 79
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = [
+  "joblib",
   "numba",
+  "numpy",
+  "scipy",
+  "scipy.stats",
   "skimage",
   "statsmodels.stats.multitest",
 ]

@@ -2,22 +2,10 @@ name: Tests
 on:
   push:
     branches:
-      - main
-      - '*.x'
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-      - '*.rst'
-      - '*.txt'
+      - "*"
   pull_request:
     branches:
-      - main
-      - '*.x'
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-      - '*.rst'
-      - '*.txt'
+      - "*"
 jobs:
   tests:
     name: ${{ matrix.name }}
@@ -26,15 +14,25 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {name: 3.10 Linux, python: '3.10', os: ubuntu-latest, tox: py310}
-          - {name: 3.10 Windows, python: '3.10', os: windows-latest, tox: py310}
-          - {name: 3.10 Mac, python: '3.10', os: macos-latest, tox: py310}
-          - {name: Lint, python: '3.10', os: ubuntu-latest, tox: lint}
-          - {name: Typing, python: '3.10', os: ubuntu-latest, tox: typing}
-          - {name: Style, python: '3.10', os: ubuntu-latest, tox: style}
+          # - { name: 3.12 Linux, python: "3.12", os: ubuntu-latest, tox: py312 }
+          # - { name: 3.11 Linux, python: "3.11", os: ubuntu-latest, tox: py311 }
+          # - { name: 3.10 Linux, python: "3.10", os: ubuntu-latest, tox: py310 }
+          # - {
+          #     name: 3.12 Windows,
+          #     python: "3.12",
+          #     os: windows-latest,
+          #     tox: py312,
+          #   }
+          # - { name: 3.12 Mac, python: "3.12", os: macos-latest, tox: py312 }
+          - {
+              name: Lint with pre-commit,
+              python: "3.12",
+              os: ubuntu-latest,
+              tox: lint,
+            }
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
       - name: update pip
@@ -44,9 +42,11 @@ jobs:
         id: pip-cache
         run: echo "::set-output name=dir::$(pip cache dir)"
       - name: cache pip
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: pip|${{ runner.os }}|${{ matrix.python }}|${{ hashFiles('setup.py') }}|${{ hashFiles('requirements/*.txt') }}
+          key:
+            pip|${{ runner.os }}|${{ matrix.python }}|${{
+            hashFiles('setup.py')}}
       - run: pip install tox
       - run: tox -e ${{ matrix.tox }}

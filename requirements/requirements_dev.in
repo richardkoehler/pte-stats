@@ -1,9 +1,0 @@
--c requirements.txt
-black
-isort
-mypy
-pip-tools
-pylint
-pytest
-pytest-cov
-tox

@@ -1,6 +1,5 @@
 """Module for statistical analysis of time series."""
 import numpy as np
-from statsmodels.stats.multitest import fdrcorrection
 
 import pte_stats
 
@@ -10,11 +9,8 @@ def timeseries_pvals(
     y: int | float | np.ndarray,
     n_perm: int,
     two_tailed: bool,
-    _scipy: bool = False,
 ) -> np.ndarray:
     """Calculate sample-wise p-values for array using permutation testing."""
-    import scipy.stats
-
     p_vals = np.empty(len(x))
     if isinstance(y, (int, float)):
         for i, x_ in enumerate(x):
@@ -23,6 +19,7 @@ def timeseries_pvals(
             )
     else:
         # if _scipy:
+        # import scipy.stats
 
         #     def statistic(x, y, axis):
         #         return np.mean(a=x, axis=axis) - np.mean(a=y, axis=axis)
@@ -45,39 +42,6 @@ def timeseries_pvals(
                 data_a=x_, data_b=y_, n_perm=n_perm, two_tailed=two_tailed
             )
     return p_vals
-
-
-def correct_pvals(
-    p_vals: np.ndarray,
-    alpha: float = 0.05,
-    correction_method: str = "cluster",
-    n_perm: int = 10000,
-):
-    """Correct p-values for multiple comparisons."""
-    if correction_method == "cluster_pvals":
-        _, signif = pte_stats.cluster_analysis_from_pvals(
-            p_values=p_vals, alpha=alpha, n_perm=n_perm, only_max_cluster=False
-        )
-        if len(signif) > 0:
-            signif = np.hstack(signif)
-        else:
-            signif = np.array([])
-    elif correction_method == "fdr":
-        shape = p_vals.shape
-        rejected, _ = fdrcorrection(
-            pvals=p_vals.flatten(),
-            alpha=alpha,
-            method="poscorr",
-            is_sorted=False,
-        )
-        rejected = np.reshape(rejected, shape)
-        signif = np.where(rejected)[0]
-    else:
-        raise ValueError(
-            "`correction_method` must be one of either `cluster_pvals` or"
-            f"`fdr`. Got:{correction_method}."
-        )
-    return signif
 
 
 def handle_baseline(
@@ -115,17 +79,18 @@ def handle_baseline_bytimes(
     if any(baseline) and times is None:
         raise ValueError(
             "If `baseline` is any value other than `None`, or `(None, None)`,"
-            f" `times` must be provided. Got: {baseline=}"
+            f" `times` must be provided. Got: {baseline = }"
         )
-    if baseline[0] is None:
-        base_start = 0
+    baseline_start, baseline_end = baseline[0], baseline[1]
+    if baseline_start is None:
+        ind_start = 0
     else:
-        base_start = np.where(baseline[0] <= times)[0][0]
+        ind_start = np.where(baseline_start <= times)[0][0]  # type: ignore
     if baseline[1] is None:
-        base_end = None
+        ind_end = None
     else:
-        base_end = np.where(times <= baseline[1])[0][-1]
-    return base_start, base_end
+        ind_end = np.where(times <= baseline_end)[0][-1]  # type: ignore
+    return ind_start, ind_end
 
 
 def baseline_correct(
@@ -136,10 +101,9 @@ def baseline_correct(
     baseline_trialwise: bool = False,
 ) -> np.ndarray:
     """Baseline correct data."""
+    axis: int | tuple[int, int] = (-2, -1)
     if baseline_trialwise:
         axis = -1
-    else:
-        axis = (-2, -1)
 
     baseline = data[::, base_start:base_end]
 
