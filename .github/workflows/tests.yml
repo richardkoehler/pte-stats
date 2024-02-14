@@ -25,10 +25,10 @@ jobs:
           #   }
           # - { name: 3.12 Mac, python: "3.12", os: macos-latest, tox: py312 }
           - {
-              name: Pre-commit,
+              name: Lint with pre-commit,
               python: "3.12",
               os: ubuntu-latest,
-              tox: pre-commit,
+              tox: lint,
             }
     steps:
       - uses: actions/checkout@v4

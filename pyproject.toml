@@ -30,6 +30,7 @@ dependencies = [
   "numpy",
   "scikit-image",
   "statsmodels",
+  "pandas-stubs",
 ]
 
 [project.optional-dependencies]
