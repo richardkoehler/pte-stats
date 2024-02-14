@@ -1,6 +1,6 @@
 """An open-source software package for statistics with time series. """
 
-__version__ = "0.3.0.dev1"
+__version__ = "0.3.0"
 
 from .cluster import (
     cluster_analysis_1d,
