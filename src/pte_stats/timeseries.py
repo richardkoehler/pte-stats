@@ -79,17 +79,18 @@ def handle_baseline_bytimes(
     if any(baseline) and times is None:
         raise ValueError(
             "If `baseline` is any value other than `None`, or `(None, None)`,"
-            f" `times` must be provided. Got: {baseline=}"
+            f" `times` must be provided. Got: {baseline = }"
         )
-    if baseline[0] is None:
-        base_start = 0
+    baseline_start, baseline_end = baseline[0], baseline[1]
+    if baseline_start is None:
+        ind_start = 0
     else:
-        base_start = np.where(baseline[0] <= times)[0][0]
+        ind_start = np.where(baseline_start <= times)[0][0]  # type: ignore
     if baseline[1] is None:
-        base_end = None
+        ind_end = None
     else:
-        base_end = np.where(times <= baseline[1])[0][-1]
-    return base_start, base_end
+        ind_end = np.where(times <= baseline_end)[0][-1]  # type: ignore
+    return ind_start, ind_end
 
 
 def baseline_correct(
@@ -100,10 +101,9 @@ def baseline_correct(
     baseline_trialwise: bool = False,
 ) -> np.ndarray:
     """Baseline correct data."""
+    axis: int | tuple[int, int] = (-2, -1)
     if baseline_trialwise:
         axis = -1
-    else:
-        axis = (-2, -1)
 
     baseline = data[::, base_start:base_end]
 

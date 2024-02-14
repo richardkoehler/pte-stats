@@ -24,6 +24,7 @@ readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
 
 dependencies = [
+  "joblib",
   "numba",
   "numpy",
   "scikit-image",
@@ -35,10 +36,13 @@ dev = [
   "black",
   "isort",
   "mypy",
+  "pandas-stubs",
   "pip-tools",
+  "pre-commit",
   "pylint",
   "pytest",
   "pytest-cov",
+  "ruff",
   "tox",
 ]
 
@@ -67,7 +71,11 @@ line-length = 79
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = [
+  "joblib",
   "numba",
+  "numpy",
+  "scipy",
+  "scipy.stats",
   "skimage",
   "statsmodels.stats.multitest",
 ]

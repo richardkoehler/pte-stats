@@ -16,7 +16,7 @@ def spearmans_rho_permutation(
 
     Parameters
     ----------
-    x (np array) : first distibution
+    x (np array) : first distribution
     y (np array) : second distribution
     n_permp (int): number of permutations
 
@@ -37,8 +37,8 @@ def spearmans_rho_permutation(
     args_order_2 = np.arange(0, pV.shape[1], 1)
     for _ in range(n_perm):
         # Shuffle the data:
-        random.shuffle(args_order)
-        random.shuffle(args_order_2)
+        random.shuffle(args_order)  # type: ignore
+        random.shuffle(args_order_2)  # type: ignore
         # Compute permuted absolute difference of your two sampled
         # distributions and store it in pD:
         pD.append(

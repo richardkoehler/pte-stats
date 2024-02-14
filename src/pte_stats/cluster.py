@@ -188,7 +188,7 @@ def cluster_analysis_2d(
     )  # type: ignore
 
     if num_clusters < 1:
-        return [], []
+        return p_values, [], []
 
     p_values_inv = np.asarray(1 - p_values)
 
@@ -391,18 +391,18 @@ def _null_distribution_2d_from_pvals(
         Null distribution of shape (_n_perm, )
     """
     idx = np.arange(p_values.size)
-    kwargs = {
+    kwargs: dict[str, np.ndarray | float] = {
         "p_values": p_values,
         "idx": idx,
         "alpha": alpha,
     }
     if n_jobs in (0, 1):
-        null_distr = [_single_p_sum_2d_pvals(**kwargs) for _ in range(n_perm)]
+        null_distr = [_single_p_sum_2d_pvals(**kwargs) for _ in range(n_perm)]  # type: ignore
     else:
         from joblib import Parallel, delayed
 
         null_distr = Parallel(n_jobs=n_jobs, verbose=1)(
-            delayed(_single_p_sum_2d_pvals)(**kwargs) for _ in range(n_perm)
+            delayed(_single_p_sum_2d_pvals)(**kwargs) for _ in range(n_perm)  # type: ignore
         )
     return np.array(null_distr)
 
@@ -460,12 +460,12 @@ def _null_distribution_2d(
         "two_tailed": two_tailed,
     }
     if n_jobs in (0, 1):
-        null_distr = [_single_p_sum_2d(**kwargs) for _ in range(n_perm)]
+        null_distr = [_single_p_sum_2d(**kwargs) for _ in range(n_perm)]  # type: ignore
     else:
         from joblib import Parallel, delayed
 
         null_distr = Parallel(n_jobs=n_jobs, verbose=1)(
-            delayed(_single_p_sum_2d)(**kwargs) for _ in range(n_perm)
+            delayed(_single_p_sum_2d)(**kwargs) for _ in range(n_perm)  # type: ignore
         )
     return np.array(null_distr)
 
