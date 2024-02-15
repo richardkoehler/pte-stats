@@ -21,14 +21,15 @@ env:
 
 jobs:
   tests:
-    name: ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.id }}
+    name:
+      ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.task.name }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        python: ["3.12"]
+        # os: [ubuntu-latest]
+        # python: ["3.12"]
 
         include:
           # Do not test until tests are up to date
@@ -37,25 +38,30 @@ jobs:
           #     os: [windows-latest, ubuntu-latest, macos-latest]
           #     run: |
           #       pytest -v --color=yes tests/
-          - id: 1
+          - os: ubuntu-latest
+            python: "3.12"
             task:
               name: Build
               run: hatch build
-          - id: 2
+          - os: ubuntu-latest
+            python: "3.12"
             task:
               name: Pre-commit
               run: |
                 pip install pre-commit
                 pre-commit run --all-files
-          - id: 3
+          - os: ubuntu-latest
+            python: "3.12"
             task:
               name: Lint
               run: ruff check .
-          - id: 4
+          - os: ubuntu-latest
+            python: "3.12"
             task:
               name: Type check
               run: mypy .
-          - id: 5
+          - os: ubuntu-latest
+            python: "3.12"
             task:
               name: Style
               run: black --check .
