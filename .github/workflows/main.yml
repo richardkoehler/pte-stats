@@ -44,10 +44,11 @@ jobs:
               os: [windows-latest, ubuntu-latest, macos-latest]
               run: |
                 pytest -v --color=yes tests/
+
           - task:
               name: Build
               os: [windows-latest, ubuntu-latest, macos-latest]
-              run: python -m build
+              run: hatch build
 
           - python: "3.12"
             task:
