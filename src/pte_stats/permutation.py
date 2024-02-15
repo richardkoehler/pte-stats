@@ -1,10 +1,11 @@
 """Module for permutation testing."""
+
 import random
 
 import numpy as np
-from numba import njit, prange
 import pandas as pd
 import scipy.stats
+from numba import njit, prange
 
 
 def spearmans_rho_permutation(
@@ -81,7 +82,7 @@ def permutation_2d(
     float
         P-value of permutation test
     """
-    if isinstance(data_b, (int, float)):
+    if isinstance(data_b, int | float):
         data_b = np.ones((1, *data_a.shape[1:])) * data_b
         return permutation_2d_onesample(
             data_a=data_a, data_b=data_b, n_perm=n_perm, two_tailed=two_tailed
@@ -122,7 +123,7 @@ def permutation_1d(
     array
         P-values of permutation tests
     """
-    if isinstance(data_b, (int, float)):
+    if isinstance(data_b, int | float):
         return permutation_1d_onesample(
             data_a=data_a, data_b=data_b, n_perm=n_perm, two_tailed=two_tailed
         )
@@ -136,7 +137,7 @@ def permutation_1d_twosample(
     data_a: np.ndarray, data_b: np.ndarray, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
     """"""
-    p_values = np.empty((data_a.shape[1]))
+    p_values = np.empty(data_a.shape[1])
 
     for i in np.arange(data_a.shape[1]):
         _, p = permutation_twosample(
@@ -151,7 +152,7 @@ def permutation_1d_onesample(
     data_a: np.ndarray, data_b: int | float, n_perm: int, two_tailed: bool
 ) -> np.ndarray:
     """"""
-    p_values = np.empty((data_a.shape[1]))
+    p_values = np.empty(data_a.shape[1])
 
     for i in np.arange(data_a.shape[1]):
         _, p = permutation_onesample(data_a[:, i], data_b, n_perm, two_tailed)
