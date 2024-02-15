@@ -137,3 +137,6 @@ dmypy.json
 
 # Ruff litner
 .ruff_cache/
+
+# Archive
+.archive/

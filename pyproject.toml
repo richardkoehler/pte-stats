@@ -2,7 +2,6 @@
 build-backend = "hatchling.build"
 requires = ["hatchling"]
 
-
 [project]
 authors = [
   {name = "Richard M. Köhler"},
@@ -30,13 +29,13 @@ dependencies = [
   "numpy",
   "scikit-image",
   "statsmodels",
-  "pandas-stubs",
 ]
 
 [project.optional-dependencies]
 dev = [
   "black",
   "mypy",
+  "packaging",
   "pandas-stubs",
   "pre-commit",
   "pytest",
@@ -45,27 +44,35 @@ dev = [
   "tox",
 ]
 
-[tool.flit.module]
-name = "pte_stats"
-
 [tool.hatch.version]
 path = "src/pte_stats/__init__.py"
 
 [project.urls]
 bugtracker = "https://github.com/richardkoehler/pte-stats/issues"
-changelog = "https://github.com/richardkoehler/pte-stats/blob/main/doc/CHANGELOG.md"
+changelog = "https://github.com/richardkoehler/pte-stats/blob/main/docs/CHANGELOG.md"
 repository = "https://github.com/richardkoehler/pte-stats"
 
 [tool.black]
-exclude = '''
-/(
-  __pycache__
-)/
-'''
 line-length = 79
 
 [tool.ruff]
 line-length = 79
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
