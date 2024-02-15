@@ -21,7 +21,8 @@ env:
 
 jobs:
   tests:
-    name: ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.name }}
+    name:
+      ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.task.name }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
@@ -29,13 +30,13 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python: ["3.12"]
+        task:
+          - name: Test
+            run:
+              .
+              # pytest -v --color=yes tests/
         include:
           # Do not test until tests are up to date
-          # - task:
-          #     name: Test
-          #     os: [windows-latest, ubuntu-latest, macos-latest]
-          #     run: |
-          #       pytest -v --color=yes tests/
           - name: Build
             run: hatch build
           - name: Pre-commit
@@ -71,13 +72,13 @@ jobs:
             mypy-${{ env.CACHE_PREFIX }}-${{ runner.os }}-${{ matrix.python }}-${{ hashFiles('*requirements.txt') }}-${{ github.ref }}
             mypy-${{ env.CACHE_PREFIX }}-${{ runner.os }}-${{ matrix.python }}-${{ hashFiles('*requirements.txt') }}
 
-      - name: ${{ matrix.name }}
+      - name: ${{ matrix.task.name }}
         run: |
           . .venv/bin/activate
-          ${{ matrix.run }}
+          ${{ matrix.task.run }}
 
       - name: Upload package distribution files
-        if: matrix.name == 'Build'
+        if: matrix.task.name == 'Build'
         uses: actions/upload-artifact@v4
         with:
           name: package
