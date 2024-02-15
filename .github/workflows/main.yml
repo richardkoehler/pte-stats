@@ -21,7 +21,7 @@ env:
 
 jobs:
   tests:
-    name: Python ${{ matrix.python }} - ${{ matrix.task.name }}
+    name: ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.id }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
@@ -37,29 +37,24 @@ jobs:
           #     os: [windows-latest, ubuntu-latest, macos-latest]
           #     run: |
           #       pytest -v --color=yes tests/
-
           - id: 1
             task:
               name: Build
               run: hatch build
-
           - id: 2
             task:
               name: Pre-commit
               run: |
                 pip install pre-commit
                 pre-commit run --all-files
-
           - id: 3
             task:
               name: Lint
               run: ruff check .
-
           - id: 4
             task:
               name: Type check
               run: mypy .
-
           - id: 5
             task:
               name: Style
