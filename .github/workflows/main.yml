@@ -23,12 +23,12 @@ jobs:
   tests:
     name:
       ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.task.name }}
-    runs-on: ${{ matrix.os }}
+    runs-on: [ubuntu-latest]
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        # os: [ubuntu-latest]
         python: ["3.12"]
         task:
           - name: Test
