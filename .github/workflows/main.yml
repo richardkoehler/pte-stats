@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        # python: ["3.12", "3.11", "3.10"]
+        python: ["3.12"]
 
         include:
           # Do not test until tests are up to date
@@ -38,30 +38,25 @@ jobs:
           #     run: |
           #       pytest -v --color=yes tests/
 
-          - python: "3.12"
-            task:
+          - task:
               name: Build
               run: hatch build
 
-          - python: "3.12"
-            task:
+          - task:
               name: pre-commit
               run: |
                 pip install pre-commit
                 pre-commit run --all-files
 
-          - python: "3.12"
-            task:
+          - task:
               name: Lint
               run: ruff check .
 
-          - python: "3.12"
-            task:
+          - task:
               name: Type check
               run: mypy .
 
-          - python: "3.12"
-            task:
+          - task:
               name: Style
               run: black --check .
 
