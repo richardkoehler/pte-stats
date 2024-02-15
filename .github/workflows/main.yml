@@ -45,9 +45,9 @@ jobs:
               run: |
                 pytest -v --color=yes tests/
 
-          - task:
+          - python: "3.12"
+            task:
               name: Build
-              os: [windows-latest, ubuntu-latest, macos-latest]
               run: hatch build
 
           - python: "3.12"
