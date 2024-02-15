@@ -38,25 +38,30 @@ jobs:
           #     run: |
           #       pytest -v --color=yes tests/
 
-          - task:
+          - id: 1
+            task:
               name: Build
               run: hatch build
 
-          - task:
-              name: pre-commit
+          - id: 2
+            task:
+              name: Pre-commit
               run: |
                 pip install pre-commit
                 pre-commit run --all-files
 
-          - task:
+          - id: 3
+            task:
               name: Lint
               run: ruff check .
 
-          - task:
+          - id: 4
+            task:
               name: Type check
               run: mypy .
 
-          - task:
+          - id: 5
+            task:
               name: Style
               run: black --check .
 
