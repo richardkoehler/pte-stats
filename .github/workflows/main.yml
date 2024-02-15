@@ -21,16 +21,14 @@ env:
 
 jobs:
   tests:
-    name:
-      ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.task.name }}
+    name: ${{ matrix.os }} - Python ${{ matrix.python }} - ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        # os: [ubuntu-latest]
-        # python: ["3.12"]
-
+        os: [ubuntu-latest]
+        python: ["3.12"]
         include:
           # Do not test until tests are up to date
           # - task:
@@ -38,33 +36,18 @@ jobs:
           #     os: [windows-latest, ubuntu-latest, macos-latest]
           #     run: |
           #       pytest -v --color=yes tests/
-          - os: ubuntu-latest
-            python: "3.12"
-            task:
-              name: Build
-              run: hatch build
-          - os: ubuntu-latest
-            python: "3.12"
-            task:
-              name: Pre-commit
-              run: |
-                pip install pre-commit
-                pre-commit run --all-files
-          - os: ubuntu-latest
-            python: "3.12"
-            task:
-              name: Lint
-              run: ruff check .
-          - os: ubuntu-latest
-            python: "3.12"
-            task:
-              name: Type check
-              run: mypy .
-          - os: ubuntu-latest
-            python: "3.12"
-            task:
-              name: Style
-              run: black --check .
+          - name: Build
+            run: hatch build
+          - name: Pre-commit
+            run: |
+              pip install pre-commit
+              pre-commit run --all-files
+          - name: Lint
+            run: ruff check .
+          - name: Type check
+            run: mypy .
+          - name: Style
+            run: black --check .
 
     steps:
       - uses: actions/checkout@v4
@@ -76,7 +59,7 @@ jobs:
           cache-prefix: ${{ env.CACHE_PREFIX }}
 
       - name: Restore mypy cache
-        if: matrix.task.name == 'Type check'
+        if: matrix.name == 'Type check'
         uses: actions/cache@v4
         with:
           path: .mypy_cache
@@ -88,13 +71,13 @@ jobs:
             mypy-${{ env.CACHE_PREFIX }}-${{ runner.os }}-${{ matrix.python }}-${{ hashFiles('*requirements.txt') }}-${{ github.ref }}
             mypy-${{ env.CACHE_PREFIX }}-${{ runner.os }}-${{ matrix.python }}-${{ hashFiles('*requirements.txt') }}
 
-      - name: ${{ matrix.task.name }}
+      - name: ${{ matrix.name }}
         run: |
           . .venv/bin/activate
-          ${{ matrix.task.run }}
+          ${{ matrix.run }}
 
       - name: Upload package distribution files
-        if: matrix.task.name == 'Build'
+        if: matrix.name == 'Build'
         uses: actions/upload-artifact@v4
         with:
           name: package
