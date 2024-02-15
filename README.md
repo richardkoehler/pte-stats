@@ -95,9 +95,9 @@ PTE Stats is licensed under the [MIT license](license-url).
   https://img.shields.io/static/v1?label=PyPi&message=v0.2.0&logoColor=black&labelColor=grey&color=blue
 [pypi-url]: https://pypi.org/project/pte-stats/
 [tests-shield]:
-  https://github.com/richardkoehler/pte-stats/actions/workflows/tests.yml/badge.svg
+  https://github.com/richardkoehler/pte-stats/actions/workflows/main.yml/badge.svg
 [tests-url]:
-  https://github.com/richardkoehler/pte-stats/actions/workflows/tests.yml
+  https://github.com/richardkoehler/pte-stats/actions/workflows/main.yml
 [homepage-shield]:
   https://img.shields.io/static/v1?label=Homepage&message=ICN&logoColor=black&labelColor=grey&color=9cf
 [homepage-url]: https://www.icneuromodulation.org/
