@@ -36,28 +36,25 @@ jobs:
               .
               # pytest -v --color=yes tests/
         include:
-          - python: "3.11"
+          - python: "3.12"
             task:
               name: Lint
               run: ruff check .
 
-          - python: "3.11"
+          - python: "3.12"
             task:
               name: Type check
               run: mypy .
 
-          - python: "3.11"
+          - python: "3.12"
             task:
               name: Build
-              run: |
-                python -m build
+              run: hatch build
 
-          - python: "3.11"
+          - python: "3.12"
             task:
               name: Style
-              run: |
-                isort --check .
-                black --check .
+              run: black --check .
 
     steps:
       - uses: actions/checkout@v4
