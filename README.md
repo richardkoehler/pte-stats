@@ -2,7 +2,6 @@
 [![Tests][tests-shield]][tests-url] [![License][license-shield]][license-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Code Style][codestyle-shield]][codestyle-url]
-[![Homepage][homepage-shield]][homepage-url]
 
 # PTE Stats - Python tools for electrophysiology
 
@@ -89,18 +88,15 @@ PTE Stats is licensed under the [MIT license](license-url).
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [python-shield]:
-  https://img.shields.io/static/v1?label=Python&message=3.10&logoColor=black&labelColor=grey&color=blue
+  https://img.shields.io/static/v1?label=Python&message=3.12&logoColor=black&labelColor=grey&color=blue
 [python-url]: https://pypi.org/project/pte-stats/
 [pypi-shield]:
-  https://img.shields.io/static/v1?label=PyPi&message=v0.2.0&logoColor=black&labelColor=grey&color=blue
+  https://img.shields.io/static/v1?label=PyPi&message=v0.3.0&logoColor=black&labelColor=grey&color=blue
 [pypi-url]: https://pypi.org/project/pte-stats/
 [tests-shield]:
-  https://github.com/richardkoehler/pte-stats/actions/workflows/tests.yml/badge.svg
+  https://github.com/richardkoehler/pte-stats/actions/workflows/main.yml/badge.svg
 [tests-url]:
-  https://github.com/richardkoehler/pte-stats/actions/workflows/tests.yml
-[homepage-shield]:
-  https://img.shields.io/static/v1?label=Homepage&message=ICN&logoColor=black&labelColor=grey&color=9cf
-[homepage-url]: https://www.icneuromodulation.org/
+  https://github.com/richardkoehler/pte-stats/actions/workflows/main.yml
 [contributors-shield]:
   https://img.shields.io/github/contributors/richardkoehler/pte-stats.svg
 [contributors-url]:
