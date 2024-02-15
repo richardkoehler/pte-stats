@@ -8,11 +8,7 @@ and this project adheres to
 
 ## Unreleased
 
-## [v0.3.0rc1](https://github.com/richardkoehler/pte-stats/releases/tag/v0.3.0rc1) - 2024-02-15
-
 ### Added
-
-- Minor additions
 
 ### Fixed
 
@@ -21,6 +17,12 @@ and this project adheres to
 ### Deprecated
 
 ### Removed
+
+## [v0.3.0](https://github.com/richardkoehler/pte-stats/releases/tag/v0.3.0) - 2024-02-15
+
+## [v0.3.0rc1](https://github.com/richardkoehler/pte-stats/releases/tag/v0.3.0rc1) - 2024-02-15
+
+- Minor additions
 
 ## [0.2.0](https://github.com/richardkoehler/pte-stats/releases/tag/v0.2.0) - 2023-01-12
 
