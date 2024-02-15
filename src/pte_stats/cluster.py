@@ -1,4 +1,5 @@
 """Module for cluster-based statistics."""
+
 import numpy as np
 from numba import njit
 from skimage import measure
@@ -46,7 +47,7 @@ def cluster_analysis_1d(
     min_cluster_size: int = 1,
 ) -> tuple[list, list]:
     """Calculate significant clusters and their corresponding p-values."""
-    if isinstance(data_b, (int, float)):
+    if isinstance(data_b, int | float):
         f_perm = pte_stats.permutation_1d_onesample
         f_null_distr = _null_distribution_1d_onesample
     else:
@@ -90,12 +91,11 @@ def cluster_analysis_1d(
             clusters.append(index_cluster)
             cluster_pvals.append(p_val)
 
-        if only_max_cluster:
-            if p_sum > p_sum_max:
-                clusters.clear()
-                clusters.append(index_cluster)
-                cluster_pvals = [p_val]
-                p_sum_max = p_sum
+        if only_max_cluster and p_sum > p_sum_max:
+            clusters.clear()
+            clusters.append(index_cluster)
+            cluster_pvals = [p_val]
+            p_sum_max = p_sum
 
     return cluster_pvals, clusters
 
@@ -156,12 +156,13 @@ def cluster_analysis_1d_from_pvals(
             clusters.append(index_cluster)
             cluster_pvals.append(p_val)
 
-        if only_max_cluster:
-            if max_cluster_sum == 0 or p_cluster_sum > max_cluster_sum:
-                clusters.clear()
-                clusters.append(index_cluster)
-                cluster_pvals = [p_val]
-                max_cluster_sum = p_cluster_sum
+        if only_max_cluster and (
+            max_cluster_sum == 0 or p_cluster_sum > max_cluster_sum
+        ):
+            clusters.clear()
+            clusters.append(index_cluster)
+            cluster_pvals = [p_val]
+            max_cluster_sum = p_cluster_sum
 
     return cluster_pvals, clusters
 
@@ -213,12 +214,11 @@ def cluster_analysis_2d(
             clusters.append(index_cluster)
             cluster_pvals.append(p_val)
 
-        if only_max_cluster:
-            if p_sum > p_sum_max:
-                clusters.clear()
-                clusters.append(index_cluster)
-                cluster_pvals = [p_val]
-                p_sum_max = p_sum
+        if only_max_cluster and p_sum > p_sum_max:
+            clusters.clear()
+            clusters.append(index_cluster)
+            cluster_pvals = [p_val]
+            p_sum_max = p_sum
 
     return p_values, cluster_pvals, clusters
 
@@ -281,12 +281,11 @@ def cluster_correct_pvals_2d(
             clusters.append(index_cluster)
             cluster_pvals.append(p_val)
 
-        if only_max_cluster:
-            if p_sum > p_sum_max:
-                clusters.clear()
-                clusters.append(index_cluster)
-                cluster_pvals = [p_val]
-                p_sum_max = p_sum
+        if only_max_cluster and p_sum > p_sum_max:
+            clusters.clear()
+            clusters.append(index_cluster)
+            cluster_pvals = [p_val]
+            p_sum_max = p_sum
     return cluster_pvals, clusters
 
 
@@ -345,10 +344,7 @@ def _correct_pvals(
         _, signif = cluster_analysis_1d_from_pvals(
             p_values=p_vals, alpha=alpha, n_perm=n_perm, only_max_cluster=False
         )
-        if len(signif) > 0:
-            signif = np.hstack(signif)
-        else:
-            signif = np.array([])
+        signif = np.hstack(signif) if len(signif) > 0 else np.array([])
     elif correction_method == "fdr":
         shape = p_vals.shape
         rejected, _ = fdrcorrection(
@@ -478,7 +474,7 @@ def _single_p_sum_2d(
     two_tailed: bool,
 ) -> float:
     """"""
-    if isinstance(data_b, (int, float)):
+    if isinstance(data_b, int | float):
         sign = np.random.choice(
             a=np.array([-1, 1]), size=data_a.shape[0], replace=True
         ).reshape(data_a.shape[0], 1, 1)

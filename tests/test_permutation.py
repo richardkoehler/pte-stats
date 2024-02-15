@@ -1,8 +1,8 @@
 """Test permutation.py module."""
-import numpy as np
-import pytest
 
+import numpy as np
 import pte_stats
+import pytest
 
 
 class TestPermutationOnesample:

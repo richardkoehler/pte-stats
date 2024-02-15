@@ -1,4 +1,5 @@
 """Module for statistical analysis of time series."""
+
 import numpy as np
 
 import pte_stats
@@ -12,31 +13,12 @@ def timeseries_pvals(
 ) -> np.ndarray:
     """Calculate sample-wise p-values for array using permutation testing."""
     p_vals = np.empty(len(x))
-    if isinstance(y, (int, float)):
+    if isinstance(y, int | float):
         for i, x_ in enumerate(x):
             _, p_vals[i] = pte_stats.permutation_onesample(
                 data_a=x_, data_b=y, n_perm=n_perm, two_tailed=two_tailed
             )
     else:
-        # if _scipy:
-        # import scipy.stats
-
-        #     def statistic(x, y, axis):
-        #         return np.mean(a=x, axis=axis) - np.mean(a=y, axis=axis)
-
-        #     for i, (x_, y_) in enumerate(zip(x, y, strict=True)):
-        #         res = scipy.stats.permutation_test(
-        #             (x_, y_),
-        #             statistic,
-        #             vectorized=True,
-        #             n_resamples=n_perm,  # int(1e6),
-        #             permutation_type="independent",
-        #         )
-        #         p_vals[i] = res.pvalue
-        #         # _, p_vals[i] = pte_stats.permutation_twosample(
-        #         #     data_a=x_, data_b=y_, n_perm=n_perm, two_tailed=two_tailed
-        #         # )
-        # else:
         for i, (x_, y_) in enumerate(zip(x, y, strict=True)):
             _, p_vals[i] = pte_stats.permutation_twosample(
                 data_a=x_, data_b=y_, n_perm=n_perm, two_tailed=two_tailed
@@ -56,16 +38,10 @@ def handle_baseline(
             "If `baseline` is any value other than `None`, or `(None, None)`,"
             f" `sfreq` must be provided. Got: {baseline=}"
         )
-    if not sfreq:
+    if sfreq is None:
         sfreq = 0.0
-    if baseline[0] is None:
-        base_start = 0
-    else:
-        base_start = int(baseline[0] * sfreq)
-    if baseline[1] is None:
-        base_end = None
-    else:
-        base_end = int(baseline[1] * sfreq)
+    base_start = 0 if baseline[0] is None else int(baseline[0] * sfreq)
+    base_end = None if baseline[1] is None else int(baseline[1] * sfreq)
     return base_start, base_end
 
 
