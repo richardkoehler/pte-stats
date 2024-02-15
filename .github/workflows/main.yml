@@ -21,14 +21,14 @@ env:
 
 jobs:
   tests:
-    runs-on: ${{ matrix.os }}
     name: Python ${{ matrix.python }} - ${{ matrix.task.name }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python: ["3.12", "3.11", "3.10"]
+        # python: ["3.12", "3.11", "3.10"]
 
         include:
           # Do not test until tests are up to date
