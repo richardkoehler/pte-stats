@@ -24,13 +24,13 @@ and this project adheres to
 
 - Minor additions
 
-## [0.2.0](https://github.com/richardkoehler/pte-stats/releases/tag/v0.2.0) - 2023-01-12
+## [v0.2.0](https://github.com/richardkoehler/pte-stats/releases/tag/v0.2.0) - 2023-01-12
 
 ### Added
 
 - Minor additions
 
-## [0.1.0](https://github.com/richardkoehler/pte-stats/releases/tag/v0.1.0) - 2022-02-01
+## [v0.1.0](https://github.com/richardkoehler/pte-stats/releases/tag/v0.1.0) - 2022-02-01
 
 ### Added
 

@@ -1,3 +1,9 @@
+# Archive
+.archive/
+
+# Ruff linter
+.ruff_cache/
+
 # Byte-compiled / optimized / DLL files
 *__pycache__
 *.py[cod]
@@ -134,9 +140,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Ruff litner
-.ruff_cache/
-
-# Archive
-.archive/
