@@ -14,11 +14,11 @@ def clusters_from_pvals(
     alpha: float = 0.05,
     n_perm: int = 1000,
     min_cluster_size: int = 1,
-) -> tuple[list, int]:
+) -> tuple[np.ndarray, int]:
     """Return significant clusters from array of p-values."""
     p_vals_signif = np.where(p_vals <= alpha)[0]
     if p_vals_signif.size == p_vals.size:
-        return (np.ones_like(p_vals, dtype=np.int32).tolist(), 1)
+        return (np.ones_like(p_vals, dtype=np.int32), 1)
     if p_vals_signif.size > 1:
         p_vals_corr = _correct_pvals(
             p_vals=p_vals,
@@ -33,8 +33,8 @@ def clusters_from_pvals(
             clusters, cluster_count = get_clusters_1d(
                 data=clusters_raw, min_cluster_size=min_cluster_size
             )
-            return (clusters.tolist(), cluster_count)
-    return ([], 0)
+            return (clusters, cluster_count)
+    return (np.array([], np.int32), 0)
 
 
 def cluster_analysis_1d(
@@ -135,6 +135,7 @@ def cluster_analysis_1d_from_pvals(
         List of indices of each significant cluster
     """
     p_values_inv = np.asarray(1 - p_values)
+    # p_values_inv = np.log(p_values) * -1
 
     labels, num_clusters = get_clusters_1d(
         data=p_values <= alpha, min_cluster_size=min_cluster_size
@@ -398,7 +399,8 @@ def _null_distribution_2d_from_pvals(
         from joblib import Parallel, delayed
 
         null_distr = Parallel(n_jobs=n_jobs, verbose=1)(
-            delayed(_single_p_sum_2d_pvals)(**kwargs) for _ in range(n_perm)  # type: ignore
+            delayed(_single_p_sum_2d_pvals)(**kwargs)
+            for _ in range(n_perm)  # type: ignore
         )
     return np.array(null_distr)
 
@@ -461,7 +463,8 @@ def _null_distribution_2d(
         from joblib import Parallel, delayed
 
         null_distr = Parallel(n_jobs=n_jobs, verbose=1)(
-            delayed(_single_p_sum_2d)(**kwargs) for _ in range(n_perm)  # type: ignore
+            delayed(_single_p_sum_2d)(**kwargs)
+            for _ in range(n_perm)  # type: ignore
         )
     return np.array(null_distr)
 
