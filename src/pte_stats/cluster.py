@@ -134,8 +134,8 @@ def cluster_analysis_1d_from_pvals(
     clusters : list of numpy array(s)
         List of indices of each significant cluster
     """
-    p_values_inv = np.asarray(1 - p_values)
-    # p_values_inv = np.log(p_values) * -1
+    # p_values_inv = np.asarray(1 - p_values)
+    p_values_inv = np.log(p_values) * -1
 
     labels, num_clusters = get_clusters_1d(
         data=p_values <= alpha, min_cluster_size=min_cluster_size
