@@ -68,7 +68,8 @@ def cluster_analysis_1d(
     if num_clusters < 1:
         return [], []
 
-    p_values_inv = np.asarray(1 - p_values)
+    # p_values_inv = np.asarray(1 - p_values)
+    p_values_inv = np.log(p_values) * -1
 
     null_distr = f_null_distr(
         data_a=data_a,
@@ -192,7 +193,8 @@ def cluster_analysis_2d(
     if num_clusters < 1:
         return p_values, [], []
 
-    p_values_inv = np.asarray(1 - p_values)
+    # p_values_inv = np.asarray(1 - p_values)
+    p_values_inv = np.log(p_values) * -1
 
     null_distr = _null_distribution_2d(
         data_a=data_a,
@@ -269,7 +271,8 @@ def cluster_correct_pvals_2d(
         n_jobs=n_jobs,
     )
 
-    p_values_inv = np.asarray(1 - p_values)
+    # p_values_inv = np.asarray(1 - p_values)
+    p_values_inv = np.log(p_values) * -1
     p_sum_max = 0  # Is only used if only_max_cluster
     clusters = []
     cluster_pvals = []
@@ -411,7 +414,8 @@ def _single_p_sum_2d_pvals(
     rng = np.random.default_rng()
     r_per = rng.permutation(idx)
     pvals_perm = p_values.flatten()[r_per].reshape(p_values.shape)
-    p_values_inv = np.asarray(1 - pvals_perm)
+    # p_values_inv = np.asarray(1 - pvals_perm)
+    p_values_inv = np.log(pvals_perm) * -1
     labels_, num_clusters = measure.label(
         pvals_perm <= alpha, return_num=True, connectivity=1
     )  # type: ignore
@@ -491,7 +495,8 @@ def _single_p_sum_2d(
         n_perm=n_perm,
         two_tailed=two_tailed,
     )
-    p_values_inv = np.asarray(1 - p_values)
+    # p_values_inv = np.asarray(1 - p_values)
+    p_values_inv = np.log(p_values) * -1
     labels_, num_clusters = measure.label(
         p_values <= alpha, return_num=True, connectivity=1
     )  # type: ignore
@@ -546,9 +551,9 @@ def _null_distribution_from_pvals(
             p_sum = np.zeros(n_clusters)
             for ind in range(n_clusters):
                 cluster_ind[ind] = np.where(labels_ == ind + 1)[0]
-                p_sum[ind] = np.sum(
-                    np.asarray(1 - pvals_perm)[cluster_ind[ind]]
-                )
+                # p_values_inv = np.asarray(1 - pvals_perm)
+                p_values_inv = np.log(pvals_perm) * -1
+                p_sum[ind] = np.sum(p_values_inv[cluster_ind[ind]])
             null_distribution[i] = np.max(p_sum)
     return null_distribution
 
@@ -592,7 +597,8 @@ def _null_distribution_1d_onesample(
             n_perm=n_perm,
             two_tailed=two_tailed,
         )
-        p_values_inv = np.asarray(1 - p_values)
+        # p_values_inv = np.asarray(1 - p_values)
+        p_values_inv = np.log(p_values) * -1
 
         labels, num_clusters = get_clusters_1d(
             data=p_values <= alpha, min_cluster_size=min_cluster_size
@@ -642,7 +648,8 @@ def _null_distribution_1d_twosample(
             n_perm=n_perm,
             two_tailed=two_tailed,
         )
-        p_values_inv = np.asarray(1 - p_values)
+        # p_values_inv = np.asarray(1 - p_values)
+        p_values_inv = np.log(p_values) * -1
 
         labels, num_clusters = get_clusters_1d(
             data=p_values <= alpha, min_cluster_size=min_cluster_size
